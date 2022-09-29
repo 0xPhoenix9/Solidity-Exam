@@ -387,6 +387,42 @@ async function deployDelegatecallContract() {
 
   return bD;
 }
+async function deployCallingContract() {
+  const Callee = await ethers.getContractFactory("Callee");
+  const callee = await Callee.deploy();
+  await callee.deployed();
+  console.log("Callee deployed at: ", callee.address);
+
+  const Caller = await ethers.getContractFactory("Caller1");
+  const caller = await Caller.deploy();
+  await caller.deployed();
+  console.log("Caller deployed at: ", caller.address);
+
+  return callee;
+}
+
+async function deployNewContract() {
+  const CarFactory = await ethers.getContractFactory("CarFactory");
+  const carFactory = await CarFactory.deploy();
+  await carFactory.deployed();
+  console.log("CarFactory deployed at: ", carFactory.address);
+
+  return carFactory;
+}
+async function deployTryCatchContract() {
+  const FooTry = await ethers.getContractFactory("FooTry");
+  const fooTry = await FooTry.deploy("0x05c9154129a660A295F6a10a41e173bA44128eD4");
+  await fooTry.deployed();
+  console.log("FooTry deployed at: ", fooTry.address);
+
+  const BarTry = await ethers.getContractFactory("BarTry");
+  const barTry = await BarTry.deploy();
+  await barTry.deployed();
+  console.log("BarTry deployed at: ", barTry.address);
+
+  return fooTry;
+}
+
 async function main() {
   //Deploy Lock Contract
   // await deployLockContract();
@@ -470,10 +506,19 @@ async function main() {
   // await deployFallbackContract();
 
   //Deploy Call Contract
-  await deployCallContract();
+  // await deployCallContract();
 
   //Deploy Delegatecall Contract
-  await deployDelegatecallContract();
+  // await deployDelegatecallContract();
+
+  //Deploy Calling Contract
+  // await deployCallingContract();
+
+  //Deploy NewContract Contract
+  // await deployNewContract();
+
+  //Deploy TryCatch Contract
+  // await deployTryCatchContract();
 }
 
 // We recommend this pattern to be able to use async/await everywhere
